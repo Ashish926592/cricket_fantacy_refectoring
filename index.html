@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url("https://img.freepik.com/free-vector/green-cricket-sports-background-with-illustration-players-golden-trophy-cup_1302-5494.jpg?w=740&t=st=1693575452~exp=1693576052~hmac=f9441b64e0984055ea4b28e4f24f83d7c495aa3aed9885cd16f4ba5085f179a3");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+
+        .container3 {
+            width: auto;
+            font-family: Arial, sans-serif;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .over {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .over:last-child {
+            border-bottom: none;
+        }
+
+        .score {
+            width: 30px;
+            height: 30px;
+            background-color: #17a2b8;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .container1 {
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .game-over {
+            border: 2px solid #fff;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .main {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .middle {
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        let player1, player2, toss;
+        let listArr1 = [];
+        let listArr2 = [];
+        let listArr3 = [];
+        let listArr = [];
+        let newArr1 = [];
+        let newArr2 = [];
+        let newArr3 = [];
+        let newArr = [];
+        let gamingTeam = [];
+
+        let sum;
+        let sum1;
+        let sum2;
+        let sum3;
+        let point = "";
+        var BR = "<br/>";
+        let filteredArray;
+        let players;
+
+        player1 = prompt("player1 Enter your Team Name:");
+        player2 = prompt("player2 Enter your Team Name:");
+
+        function tossWin() {
+            toss = Math.floor(Math.random() >= 0.5 ? 1 : 0);
+
+            if (player1 == null || player2 == null || player1 == '' || player2 == '') {
+                alert("Please enter team name");
+                location.reload();
+            }
+            if (toss == 1) {
+
+                players = [player1, player2];
+                gamingTeam = [player1, player2];
+                let winner = player1 + " " + "has won the toss.";
+                document.getElementById("toss").innerHTML = winner;
+            } else {
+                players = [player2, player1];
+                gamingTeam = [player2, player1];
+                let winner = player2 + " " + "has won the toss.";
+                document.getElementById("toss").innerHTML = winner;
+            }
+            document.getElementById("teamName1").innerHTML = `${players[0]} Create your team<br><br>`
+            document.getElementById("team1").style.display = "block";
+
+
+        }
+
+
+
+        let json_data = [
+            {
+                name: "Virat Kohli",
+                playingRole: "Batsman",
+                credit: 10,
+            },
+            {
+                name: "Jasprit Bumrah",
+                playingRole: "Bowler",
+                credit: 12,
+            },
+            {
+                name: "Rohit Sharma",
+                playingRole: "Batsman",
+                credit: 11,
+            },
+            {
+                name: "Yuzvendra Chahal",
+                playingRole: "Bowler",
+                credit: 9,
+            },
+            {
+                name: "Mohammed Shami",
+                playingRole: "Bowler",
+                credit: 8,
+            },
+            {
+                name: "Suryakumar Yadav",
+                playingRole: "Batsman",
+                credit: 9,
+            },
+            {
+                name: "Prasidh Krishna",
+                playingRole: "Bowler",
+                credit: 7,
+            },
+            {
+                name: "Hardik Pandya",
+                playingRole: "Batsman",
+                credit: 9,
+            },
+            {
+                name: "Shikhar Dhawan",
+                playingRole: "Batsman",
+                credit: 8,
+            },
+            {
+                name: "Ravindra Jadeja",
+                playingRole: "Batsman",
+                credit: 10,
+            },
+            {
+                name: "Arshdeep Singh",
+                playingRole: "Bowler",
+                credit: 6,
+            },
+            {
+                name: "Ravichandran Ashwin",
+                playingRole: "Bowler",
+                credit: 11,
+            },
+            {
+                name: "Deepak Chahar",
+                playingRole: "Bowler",
+                credit: 9,
+            },
+            {
+                name: "Ruturaj Gaikwad",
+                playingRole: "Batsman",
+                credit: 8,
+            },
+            {
+                name: "Deepak Hooda",
+                playingRole: "Batsman",
+                credit: 9,
+            },
+            {
+                name: "Ishan Kishan",
+                playingRole: "Bowler",
+                credit: 10,
+            },
+            {
+                name: "Shreyas Iyer",
+                playingRole: "Batsman",
+                credit: 10,
+            },
+            {
+                name: "Venkatesh Iyer",
+                playingRole: "Wicketkeeper",
+                credit: 9,
+            },
+            {
+                name: "Dinesh Karthik",
+                playingRole: "Wicketkeeper",
+                credit: 11,
+            },
+            {
+                name: "Kuldeep Yadav",
+                playingRole: "Bowler",
+                credit: 9,
+            },
+            {
+                name: "Bhuvneshwar Kumar",
+                playingRole: "Bowler",
+                credit: 12,
+            },
+            {
+                name: "Mohammed Siraj",
+                playingRole: "Bowler",
+                credit: 10,
+            },
+            {
+                name: "Devdutt Padikkal",
+                playingRole: "Batsman",
+                credit: 9,
+            },
+            {
+                name: "Rishabh Pant",
+                playingRole: "Wicketkeeper",
+                credit: 10,
+            },
+            {
+                name: "Moeen Ali",
+                playingRole: "Bowler",
+                credit: 9,
+            },
+            {
+                name: "James Anderson",
+                playingRole: "Bowler",
+                credit: 12,
+            },
+            {
+                name: "Jonny Bairstow",
+                playingRole: "Batsman",
+                credit: 11,
+            },
+            {
+                name: "Sam Billings",
+                playingRole: "Batsman",
+                credit: 10,
+            },
+            {
+                name: "Stuart Broad",
+                playingRole: "Bowler",
+                credit: 9,
+            },
+            {
+                name: "Rory Burns",
+                playingRole: "Bowler",
+                credit: 8,
+            },
+            {
+                name: "Jos Buttler",
+                playingRole: "Batsman",
+                credit: 10,
+            },
+            {
+                name: "Zak Crawley",
+                playingRole: "Batsman",
+                credit: 9,
+            },
+            {
+                name: "Sam Curran",
+                playingRole: "Bowler",
+                credit: 8,
+            },
+            {
+                name: "Tom Curran",
+                playingRole: "Bowler",
+                credit: 7,
+            },
+            {
+                name: "Chris Jordan",
+                playingRole: "Bowler",
+                credit: 11,
+            },
+            {
+                name: "Jack Leach",
+                playingRole: "Batsman",
+                credit: 10,
+            },
+            {
+                name: "Liam Livingstone",
+                playingRole: "Batsman",
+                credit: 12,
+            },
+            {
+                name: "Reece Topley",
+                playingRole: "Bowler",
+                credit: 11,
+            },
+            {
+                name: "David Willey",
+                playingRole: "Wicketkeeper",
+                credit: 9,
+            },
+            {
+                name: "Joe Root",
+                playingRole: "Batsman",
+                credit: 9,
+            },
+            {
+                name: "Ben Stokes",
+                playingRole: "Batsman",
+                credit: 10,
+            },
+            {
+                name: "Pat Cummins",
+                playingRole: "Bowler",
+                credit: 11,
+            },
+            {
+                name: "Aaron Finch",
+                playingRole: "Batsman",
+                credit: 10,
+            },
+            {
+                name: "Cameron Green",
+                playingRole: "Batsman",
+                credit: 9,
+            },
+            {
+                name: "Josh Hazlewood",
+                playingRole: "Bowler",
+                credit: 9,
+            },
+            {
+                name: "Travis Head",
+                playingRole: "Wicketkeeper",
+                credit: 8,
+            },
+            {
+                name: "Usman Khawaja",
+                playingRole: "Batsman",
+                credit: 11,
+            },
+            {
+                name: "Marnus Labuschagne",
+                playingRole: "Bowler",
+                credit: 10,
+            },
+            {
+                name: "Nathan Lyon",
+                playingRole: "Bowler",
+                credit: 9,
+            },
+        ];
+
+        function bat() {
+            let bat = json_data.filter((data) => data.playingRole == "Batsman");
+            let list = "";
+            for (let i of bat) {
+                list += `<div class="card m-3 bg-success text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+                <h5 class="card-text"><strong>Name:-</strong>${i.name} </h5>
+            <p class="card-text"><strong>credit:-</strong> ${i.credit}</p>
+            <p class="card-text"><strong>PlayingRole:-</strong> ${i.playingRole}</p>
+            <button class="btn btn-outline-info"  onclick="addtoBat('${i.name}','${i.playingRole}',${i.credit})">Add</button>
+            <button class="btn btn-outline-danger"  onclick="removetoBat('${i.name}','${i.playingRole}',${i.credit})">Remove</button>
+            </div>
+          </div>
+        `;
+            }
+            document.getElementById("list").innerHTML = list;
+        }
+
+
+        function bowl() {
+            let bowl = json_data.filter((data) => data.playingRole == "Bowler");
+            let list = "";
+            for (let i of bowl) {
+                list += `<div class="card m-3 bg-warning text-black" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+                <h5 class="card-text"><strong>Name:-</strong>${i.name} </h5>
+            <p class="card-text"><strong>credit:-</strong> ${i.credit}</p>
+            <p class="card-text"><strong>Playingrole:-</strong> ${i.playingRole}</p>
+            <button class="btn btn-outline-info"  onclick="addtoBowl('${i.name}','${i.playingRole}',${i.credit})">Add</button>
+            <button class="btn btn-outline-danger"  onclick="removetoBowl('${i.name}','${i.playingRole}',${i.credit})">Remove</button>
+
+          </div>
+        </div>`;
+            }
+            document.getElementById("list").innerHTML = list;
+        }
+
+
+        function Wicketkeeper() {
+            let Wk = json_data.filter((data) => data.playingRole == "Wicketkeeper");
+            let list = "";
+            for (let i of Wk) {
+                list += `<div class="card m-3 bg-dark text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+                <h5 class="card-text"><strong>Name:-</strong>${i.name} </h5>
+            <p class="card-text"><strong>credit:-</strong> ${i.credit}</p>
+            <p class="card-text"><strong>Playingrole:-</strong> ${i.playingRole}</p>
+            <button class="btn btn-outline-info"  onclick="addtoWk('${i.name}','${i.playingRole}','${i.credit}')">Add</button>
+            <button class="btn btn-outline-danger"  onclick="removetoWk('${i.name}','${i.playingRole}','${i.credit}')">Remove</button>
+
+          </div>
+        </div>`;
+            }
+            document.getElementById("list").innerHTML = list;
+        }
+        function addtoBat(name, role, credit) {
+            obj = {
+                name: name,
+                role: role,
+                credit: credit
+            }
+
+            if (listArr1.length > 4) {
+                alert('You can only select maximum five player');
+                
+
+            } else {
+
+                let valid = listArr1.some((obj1) =>{
+                    return obj1.name === obj.name
+                });
+                
+                if(valid){
+                    alert("Teamlist in player is already available");
+                }else{
+                    listArr1.push(obj);
+                }
+                // let jsonObject = listArr1.map(JSON.stringify);
+                // let uniqueSet = new Set(jsonObject);
+                // listArr1 = Array.from(uniqueSet).map(JSON.parse);
+                // console.log(listArr1);
+                sum1 = 0;
+                for (let i of listArr1) {
+                    sum1 = sum1 + Number(i.credit);;
+                }
+                document.getElementById("batTotal").innerHTML = sum1;
+                creditData();
+
+            }
+        }
+        function addtoBowl(name, role, credit) {
+            obj = {
+                name: name,
+                role: role,
+                credit: credit
+            }
+
+            if (listArr2.length > 4) {
+                alert('You can only select maximum five player');
+            } else {
+                let valid = listArr2.some((obj1) =>{
+                    return obj1.name === obj.name
+                });
+                
+                if(valid){
+                    alert("Teamlist in player is already available");
+                }else{
+                    listArr2.push(obj);
+                }
+                sum2 = 0;
+                for (let i of listArr2) {
+                    sum2 = sum2 + Number(i.credit);;
+                }
+                document.getElementById("bowlTotal").innerHTML = sum2;
+                creditData();
+            }
+        }
+
+        function addtoWk(name, role, credit) {
+            obj = {
+                name: name,
+                role: role,
+                credit: credit
+            }
+            if (listArr3.length == 1) {
+                alert('You can only select maximum one player');
+            } else {
+                let valid = listArr3.some((obj1) =>{
+                    return obj1.name === obj.name
+                });
+                
+                if(valid){
+                    alert("Teamlist in player is already available");
+                }else{
+                    listArr3.push(obj);
+                }
+                sum3 = 0;
+                for (let i of listArr3) {
+                    sum3 = sum3 + Number(i.credit);
+                }
+                // console.log(typeof (sum3));
+                document.getElementById("keepingTotal").innerHTML = sum3;
+                creditData();
+
+            }
+        }
+
+        function removetoBat(name, role, credit) {
+            if (listArr1.length == 0) {
+                alert("TeamList is empty");
+            } else {
+                let obj1 = {
+                    name: name,
+                    role: role,
+                    credit: credit
+                }
+                let index = listArr1.findIndex((obj) => {
+                    return obj.name === obj1.name;
+                })
+                if (index == -1) {
+                    alert("Teamlist in player is not available")
+                } else {
+                    listArr1.splice(index, 1);
+                    sum1 = sum1 - obj1.credit;
+                }
+
+                document.getElementById("batTotal").innerHTML = sum1;
+                creditData();
+            }
+
+        }
+        function removetoBowl(name, role, credit) {
+            if (listArr2.length == 0) {
+                alert("TeamList is empty");
+            } else {
+                let obj1 = {
+                    name: name,
+                    role: role,
+                    credit: credit
+                }
+                let index = listArr2.findIndex((obj) => {
+                    return obj.name === obj1.name;
+                })
+                if (index == -1) {
+                    alert("Teamlist in player is not available")
+                } else {
+                    listArr2.splice(index, 1);
+                    sum2 = sum2 - obj1.credit;
+                }
+
+                document.getElementById("bowlTotal").innerHTML = sum2;
+                creditData();
+            }
+        }
+        function removetoWk(name, role, credit) {
+            if (listArr3.length == 0) {
+                alert("TeamList is empty");
+            } else {
+                let obj1 = {
+                    name: name,
+                    role: role,
+                    credit: credit
+                }
+                let index = listArr3.findIndex((obj) => {
+                    return obj.name === obj1.name;
+                })
+                if (index == -1) {
+                    alert("Teamlist in player is not available")
+                } else {
+                    listArr3.splice(index, 1);
+                    sum3 = sum3 - obj1.credit;
+                }
+
+                document.getElementById("keepingTotal").innerHTML = sum3;
+                creditData();
+            }
+        }
+
+
+        function summary() {
+            listArr = [...listArr1, ...listArr2, ...listArr3];
+            if (listArr.length == 0) {
+                alert("please choose playername");
+            }
+            else if (sum > 100) {
+                alert("Maximum Credit is 100 please recreate your team");
+                // return false;
+            }
+            else if (listArr.length !== 11) {
+                // console.log(listArr.length);
+                alert("Team size must be 11");
+                // return false;
+            }
+            sum = 0;
+            let list = "";
+            for (let i of listArr) {
+
+                list += `<div class="card m-3 bg-secondary text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+            <h5 class="card-text"><strong>Name:-</strong>${i.name} </h5>
+            <p class="card-text"><strong>Credit:-</strong> ${i.credit}</p>
+            <p class="card-text"><strong>PlayingRole:-</strong> ${i.role}</p>
+          </div>
+        </div>`;
+            }
+
+            document.getElementById("list").innerHTML = list;
+            creditData();
+            makeCaptain();
+            makeVCaptain();
+
+
+        }
+        function creditData() {
+            var teamList = [...listArr1, ...listArr2, ...listArr3]
+            sum = 0;
+            // console.log(teamList);
+            for (let i of teamList) {
+                sum = sum + Number(i.credit);;
+            }
+            if (sum > 100) {
+                alert("Maximum Credit is 100 please recreate your team")
+            }
+            document.getElementById("credittotal").innerHTML = sum;
+        }
+        var captainName1;
+        var vCaptainName1;
+        function makeCaptain() {
+            document.getElementById('chooseC').style.display = "block";
+            let option = `<option value="">ChooseCaptain</option>`;
+            players[0] = [];
+            listArr = [...listArr1, ...listArr2, ...listArr3];
+            players[0].push(listArr);
+            for (let i of listArr) {
+                option += ` 
+              <option value="${i.name}">${i.name}</option>
+              `
+            }
+            document.getElementById("captain1").innerHTML = `${option}`
+
+        }
+        function makeVCaptain() {
+            document.getElementById('chooseVC').style.display = "block"
+            let option = `<option value="">ChooseVCaptain</option>`;
+            listArr = [...listArr1, ...listArr2, ...listArr3];
+            for (let i of listArr) {
+                option += ` 
+              <option value="${i.name}">${i.name}</option>
+              `
+            }
+            document.getElementById("vCaptain1").innerHTML = `${option}`
+        }
+
+        var chooseCaptain1 = (value) => {
+            if (value == vCaptainName1) {
+                alert(`You can't select same player as Captain and Vice-Captain`)
+                return false
+            }
+            else {
+                captainName1 = value
+                console.log(captainName1)
+            }
+        }
+        var chooseVCaptain1 = (value) => {
+            if (value == captainName1) {
+                alert(`You can't select same player as Captain and Vice-Captain`)
+                return false
+            } else {
+                vCaptainName1 = value
+                console.log(vCaptainName1)
+            }
+        }
+
+
+        function secondTeam() {
+
+            if (listArr.length == 0) {
+                alert("please choose Team1");
+                return false;
+            }
+            if (sum > 100) {
+                alert("Maximum Credit is 100. Please recreate your team");
+                return false;
+            }
+            if (listArr.length !== 11) {
+                alert("11 Players must be selected ");
+                return false;
+            }
+            if (captainName1 == "" || vCaptainName1 == "" || captainName1 == null || vCaptainName1 == null) {
+                alert("Please select captain name and vice captain name");
+                return false;
+            }
+            document.getElementById('team1').style.display = "none";
+            document.getElementById("tosswin").disabled = true;
+            document.getElementById('team2').style.display = "block";
+            document.getElementById("teamName2").innerHTML = `${players[1]} Create your team<br><br>`
+
+            console.log(captainName1);
+            console.log(vCaptainName1);
+
+        }
+
+        function bat1() {
+
+            let list = "";
+            listArr = [...listArr1, ...listArr2, ...listArr3];
+            filteredArray = json_data.filter(item1 => !listArr.some(item2 => item2.name === item1.name));
+            let bat = filteredArray.filter((data) => data.playingRole == "Batsman");
+
+            // console.log(filteredArray);
+            for (let i of bat) {
+                list += `<div class="card m-3 bg-success text-light" style="width: 18rem;border:2px solid black;">
+<div class="card-body">
+    <h5 class="card-text"><strong>Name:-</strong>${i.name} </h5>
+<p class="card-text"><strong>credit:-</strong> ${i.credit}</p>
+<p class="card-text"><strong>PlayingRole:-</strong> ${i.playingRole}</p>
+<button class="btn btn-outline-info"  onclick="addtoBat1('${i.name}','${i.playingRole}',${i.credit})">Add</button>
+<button class="btn btn-outline-danger" onclick="removetoBat1('${i.name}','${i.playingRole}',${i.credit})">Remove</button>
+</div>
+</div>
+`;
+            }
+            document.getElementById("list1").innerHTML = list;
+        }
+        function bowl1() {
+
+            let list = "";
+            listArr = [...listArr1, ...listArr2, ...listArr3];
+            filteredArray = json_data.filter(item1 => !listArr.some(item2 => item2.name === item1.name));
+            let bowl = filteredArray.filter((data) => data.playingRole == "Bowler");
+
+            // console.log(filteredArray);
+            for (let i of bowl) {
+                list += `<div class="card m-3 bg-warning text-black" style="width: 18rem;border:2px solid black;">
+<div class="card-body">
+    <h5 class="card-text"><strong>Name:-</strong>${i.name} </h5>
+<p class="card-text"><strong>credit:-</strong> ${i.credit}</p>
+<p class="card-text"><strong>PlayingRole:-</strong> ${i.playingRole}</p>
+<button class="btn btn-outline-info"  onclick="addtoBowl1('${i.name}','${i.playingRole}',${i.credit})">Add</button>
+<button class="btn btn-outline-danger"  onclick="removetoBowl1('${i.name}','${i.playingRole}',${i.credit})">Remove</button>
+</div>
+</div>`;
+            }
+            document.getElementById("list1").innerHTML = list;
+        }
+        function Wicketkeeper1() {
+
+            let list = "";
+            listArr = [...listArr1, ...listArr2, ...listArr3];
+            filteredArray = json_data.filter(item1 => !listArr.some(item2 => item2.name === item1.name));
+            let wk = filteredArray.filter((data) => data.playingRole == "Wicketkeeper");
+
+            // console.log(filteredArray);
+            for (let i of wk) {
+                list += `<div class="card m-3 bg-dark text-light" style="width: 18rem;border:2px solid black;">
+<div class="card-body">
+    <h5 class="card-text"><strong>Name:-</strong>${i.name} </h5>
+<p class="card-text"><strong>credit:-</strong> ${i.credit}</p>
+<p class="card-text"><strong>PlayingRole:-</strong> ${i.playingRole}</p>
+<button class="btn btn-outline-info"  onclick="addtoWk1('${i.name}','${i.playingRole}',${i.credit})">Add</button>
+<button class="btn btn-outline-danger"  onclick="removetoWk1('${i.name}','${i.playingRole}',${i.credit})">Remove</button>
+</div>
+</div>`;
+            }
+            document.getElementById("list1").innerHTML = list;
+        }
+
+        function addtoBat1(name, role, credit) {
+            obj = {
+                name: name,
+                role: role,
+                credit: credit
+            }
+            if (newArr1.length > 4) {
+                alert('You can only select maximum five player')
+            } else {
+                let valid = newArr1.some((obj1) =>{
+                    return obj1.name === obj.name
+                });
+                
+                if(valid){
+                    alert("Teamlist in player is already available");
+                }else{
+                    newArr1.push(obj);
+                }
+                // console.log(listArr1);
+                sum1 = 0;
+                for (let i of newArr1) {
+                    sum1 = sum1 + Number(i.credit);;
+                }
+                document.getElementById("batTotal1").innerHTML = sum1;
+                creditData1();
+            }
+        }
+
+        function addtoBowl1(name, role, credit) {
+            obj = {
+                name: name,
+                role: role,
+                credit: credit
+            }
+
+            if (newArr2.length > 4) {
+                alert('You can only select maximum five player');
+            } else {
+                let valid = newArr2.some((obj1) =>{
+                    return obj1.name === obj.name
+                });
+                
+                if(valid){
+                    alert("Teamlist in player is already available");
+                }else{
+                    newArr2.push(obj);
+                }
+                sum2 = 0;
+                for (let i of newArr2) {
+                    sum2 = sum2 + Number(i.credit);;
+                }
+                document.getElementById("bowlTotal1").innerHTML = sum2;
+                creditData1();
+            }
+        }
+
+        function addtoWk1(name, role, credit) {
+            obj = {
+                name: name,
+                role: role,
+                credit: credit
+            }
+
+            if (newArr3.length == 1) {
+                alert('You can only select maximum one player');
+            } else {
+                let valid = newArr3.some((obj1) =>{
+                    return obj1.name === obj.name
+                });
+                
+                if(valid){
+                    alert("Teamlist in player is already available");
+                }else{
+                    newArr3.push(obj);
+                }
+                sum3 = 0;
+                for (let i of newArr3) {
+                    sum3 = sum3 + Number(i.credit);
+                }
+                // console.log(typeof (sum3));
+                document.getElementById("keepingTotal1").innerHTML = sum3;
+                creditData1();
+
+            }
+        }
+
+        function removetoBat1(name, role, credit) {
+            if (listArr1.length == 0) {
+                alert("TeamList is empty");
+            } else {
+                let obj1 = {
+                    name: name,
+                    role: role,
+                    credit: credit
+                }
+                let index = newArr1.findIndex((obj) => {
+                    return obj.name === obj1.name;
+                })
+                if (index == -1) {
+                    alert("Teamlist in player is not available")
+                } else {
+                    newArr1.splice(index, 1);
+                    sum1 = sum1 - obj1.credit;
+                }
+
+                document.getElementById("batTotal1").innerHTML = sum1;
+                creditData1();
+            }
+
+
+
+        }
+        function removetoBowl1(name, role, credit) {
+            if (newArr2.length == 0) {
+                alert("TeamList is empty");
+            } else {
+                let obj1 = {
+                    name: name,
+                    role: role,
+                    credit: credit
+                }
+                let index = newArr2.findIndex((obj) => {
+                    return obj.name === obj1.name;
+                })
+                if (index == -1) {
+                    alert("Teamlist in player is not available")
+                } else {
+                    newArr2.splice(index, 1);
+                    sum2 = sum2 - obj1.credit;
+
+                }
+
+                document.getElementById("bowlTotal1").innerHTML = sum2;
+                creditData1();
+            }
+        }
+        function removetoWk1(name, role, credit) {
+            if (newArr3.length == 0) {
+                alert("TeamList is empty");
+            } else {
+                let obj1 = {
+                    name: name,
+                    role: role,
+                    credit: credit
+                }
+                let index = newArr3.findIndex((obj) => {
+                    return obj.name === obj1.name;
+                })
+                if (index == -1) {
+                    alert("Teamlist in player is not available")
+                } else {
+                    newArr3.splice(index, 1);
+                    sum3 = sum3 - obj1.credit;
+                }
+
+                document.getElementById("keepingTotal1").innerHTML = sum3;
+                creditData1();
+            }
+        }
+
+        function makeCaptain1() {
+            document.getElementById('chooseC2').style.display = "block"
+            let option = `<option value="" selected>ChooseCaptain</option>`;
+            players[1] = [];
+            newArr = [...newArr1, ...newArr2, ...newArr3];
+            players[1].push(newArr);
+            for (let i of newArr) {
+                option += ` 
+              <option value="${i.name}">${i.name}</option>
+              `
+            }
+            document.getElementById("captain2").innerHTML = `${option}`
+
+        }
+        function makeVCaptain1() {
+            document.getElementById('chooseVC2').style.display = "block";
+            let option = `<option value="" selected>ChooseVCaptain</option>`;
+
+            newArr = [...newArr1, ...newArr2, ...newArr3];
+            for (let i of newArr) {
+                option += ` 
+              <option value="${i.name}">${i.name}</option>
+              `
+            }
+            document.getElementById("vCaptain2").innerHTML = `${option}`
+            document.getElementById("teamPre").style.display = "block";
+        }
+        var captainName2;
+        var vCaptainName2;
+        var chooseCaptain2 = (value) => {
+            if (value == vCaptainName2) {
+                alert(`You can't select same player as Captain and Vice-Captain`)
+                return false
+            } else if (captainName2 == "") {
+                alert("please select captain name")
+            } else {
+                captainName2 = value;
+                // console.log(captainName2)
+            }
+        }
+        var chooseVCaptain2 = (value) => {
+            if (value == captainName2) {
+                alert(`You can't select same player as Captain and Vice-Captain`)
+                return false
+            } else if (vCaptainName2 == "") {
+                alert("please select vicecaptain name")
+            } else {
+                vCaptainName2 = value
+                // console.log(vCaptainName2)
+            }
+        }
+
+
+        function creditData1() {
+            var teamList = [...newArr1, ...newArr2, ...newArr3]
+            sum = 0;
+            // console.log(teamList);
+            for (let i of teamList) {
+                sum = sum + Number(i.credit);;
+            }
+            if (sum > 100) {
+                alert("Maximum Credit is 100 please recreate your team")
+            }
+            document.getElementById("credittotal1").innerHTML = sum;
+        }
+        function summary1() {
+            if (sum > 100) {
+                alert("Maximum Credit is 100 please recreate your team");
+                return false;
+            }
+            if (listArr.length !== 11) {
+                alert("Team size must be 11");
+                return false;
+            }
+
+            newArr = [...newArr1, ...newArr2, ...newArr3];
+            sum = 0;
+
+
+            let list = "";
+            for (let i of newArr) {
+
+                list += `<div class="card m-3 bg-secondary text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+                <h5 class="card-text"><strong>Name:-</strong>${i.name} </h5>
+            <p class="card-text"><strong>Credit:-</strong> ${i.credit}</p>
+            <p class="card-text"><strong>PlayingRole:-</strong> ${i.role}</p>
+          </div>
+        </div>`;
+            }
+
+            document.getElementById("list1").innerHTML = list;
+            creditData1();
+            makeCaptain1();
+            makeVCaptain1();
+
+        }
+
+        var teamPreview = () => {
+            if (sum > 100) {
+                alert("Maximum Credit is 100. Please recreate your team");
+                return false;
+            }
+            if (newArr.length !== 11) {
+                alert("Team size must be 11");
+                return false;
+            }
+
+            if (captainName2 == "" || vCaptainName2 == "" || captainName2 == null || vCaptainName2 == null) {
+                alert(`Please Select Captain & Vice-Captain First`);
+                return false;
+            }
+            document.getElementById("team2").style.display = "none";
+            document.getElementById("teamSummary").style.display = "block";
+            document.getElementById(
+                "gamingTeam1"
+            ).innerHTML = `${gamingTeam[0].toUpperCase()} Playing XI`;
+            document.getElementById(
+                "gamingTeam2"
+            ).innerHTML = `${gamingTeam[1].toUpperCase()} Playing XI`;
+            let list1 = "";
+            let list2 = "";
+
+            for (let i of players[0]) {
+                for (let j of i) {
+                    // console.log(j.name)
+                    if (j.name == captainName1) {
+                        list1 += `  <li class="list-group-item list-group-item-primary">${j.name}-(C)</li>`;
+                    } else if (j.name == vCaptainName1) {
+                        list1 += `  <li class="list-group-item  list-group-item-secondary">${j.name}-(VC)</li>`;
+                    } else {
+                        list1 += `  <li class="list-group-item list-group-item-light">${j.name}</li>`;
+                    }
+                }
+            }
+            for (let i of players[1]) {
+                for (let j of i) {
+                    // console.log(j.name)
+                    if (j.name == captainName2) {
+                        list2 += `  <li class="list-group-item list-group-item-primary">${j.name}-(C)</li>`;
+                    } else if (j.name == vCaptainName2) {
+                        list2 += `  <li class="list-group-item  list-group-item-secondary">${j.name}-(VC)</li>`;
+                    } else {
+                        list2 += `  <li class="list-group-item list-group-item-light">${j.name}</li>`;
+                    }
+                }
+            }
+
+            document.getElementById("playingTeam1").innerHTML = list1;
+            document.getElementById("playingTeam2").innerHTML = list2;
+        };
+
+
+
+
+        function Team1() {
+            document.getElementById("hideTeams1").style.display = "inline-block";
+            document.getElementById("displayTeams1").style.display = "none";
+            document.getElementById("teamList").style.display = "block";
+            listArr = [...listArr1, ...listArr2, ...listArr3];
+            if (listArr.length == 0) {
+                alert("TeamList is empty");
+            } else if (listArr.length !== 11) {
+                alert("Team size must be 11");
+            } else {
+
+                let list = "";
+                for (let i of players[0]) {
+                    for (let j of i) {
+                        if (j.name == captainName1) {
+                            list += `<div class="card m-3 bg-secondary text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+            <h5 class="card-text"><strong>Name:-</strong>${j.name}-(C) </h5>
+            </div>
+        </div>`;
+
+                        } else if (j.name == vCaptainName1) {
+                            list += `<div class="card m-3 bg-secondary text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+            <h5 class="card-text"><strong>Name:-</strong>${j.name}-(VC) </h5>
+          </div>
+        </div>`;
+
+                        } else {
+                            list += `<div class="card m-3 bg-secondary text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+            <h5 class="card-text"><strong>Name:-</strong>${j.name} </h5>
+          </div>
+        </div>`;
+                        }
+
+                    }
+                }
+
+                document.getElementById("teamList").innerHTML = list;
+
+            }
+
+
+        }
+
+        function Team2() {
+            document.getElementById("hideTeams2").style.display = "inline-block";
+            document.getElementById("displayTeams2").style.display = "none";
+            document.getElementById("teamList").style.display = "block";
+            newArr = [...newArr1, ...newArr2, ...newArr3]
+            if (newArr.length == 0) {
+                alert("TeamList is empty");
+            } else if (newArr.length !== 11) {
+                alert("Team size must be 11");
+            } else {
+
+                let list = "";
+                for (let i of players[1]) {
+                    for (let j of i) {
+                        if (j.name == captainName2) {
+                            list += `<div class="card m-3 bg-secondary text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+            <h5 class="card-text"><strong>Name:-</strong>${j.name}-(C) </h5>
+          </div>
+        </div>`;
+
+                        } else if (j.name == vCaptainName2) {
+                            list += `<div class="card m-3 bg-secondary text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+            <h5 class="card-text"><strong>Name:-</strong>${j.name}-(VC) </h5>
+          </div>
+        </div>`;
+
+                        } else {
+                            list += `<div class="card m-3 bg-secondary text-light" style="width: 18rem;border:2px solid black;">
+            <div class="card-body">
+            <h5 class="card-text"><strong>Name:-</strong>${j.name} </h5>
+          </div>
+        </div>`;
+                        }
+
+
+                    }
+                }
+
+                document.getElementById("teamList").innerHTML = list;
+
+            }
+
+        }
+        var hideTeam1 = () => {
+            document.getElementById("hideTeams1").style.display = "none";
+            document.getElementById("teamList").style.display = "none";
+            document.getElementById("displayTeams1").style.display = "inline-block";
+        };
+        var hideTeam2 = () => {
+            document.getElementById("hideTeams2").style.display = "none";
+            document.getElementById("teamList").style.display = "none";
+            document.getElementById("displayTeams2").style.display = "inline-block";
+        };
+
+
+        function play() {
+            if (captainName2 == "" || vCaptainName2 == "" || captainName2 == null || vCaptainName2 == null) {
+                alert("Please select captain name and vice captain name")
+            } else if (listArr.length !== 11 || newArr.length !== 11) {
+                alert("Please select first team!");
+            }
+            else {
+                document.getElementById("teamSummary").style.display = "none";
+                document.getElementById("teamList").style.display = "none";
+                document.getElementById("start").style.display = "block";
+                document.getElementById("displayTeam").style.display = "block";
+                document.getElementById("hideTeams1").style.display = "none";
+                document.getElementById("hideTeams2").style.display = "none";
+                document.getElementById("end").style.display = "none";
+                document.getElementById('team1').style.display = "none";
+                document.getElementById('team2').style.display = "none";
+                document.getElementById("player11").innerHTML = gamingTeam[0];
+                document.getElementById("player22").innerHTML = gamingTeam[1];
+            }
+        }
+        function play1() {
+            listArr2.push(obj);
+                let jsonObject = listArr2.map(JSON.stringify);
+                let uniqueSet = new Set(jsonObject);
+                listArr2 = Array.from(uniqueSet).map(JSON.parse);
+
+            if (listArr.length != 11 && newArr.length != 11) {
+                alert("Please select first team!");
+            } else {
+                document.getElementById("teamList").style.display = "none";
+                document.getElementById("start").style.display = "none";
+                document.getElementById("end").style.display = "block";
+                document.getElementById('team1').style.display = "none";
+                document.getElementById('team2').style.display = "none";
+                document.getElementById("one").innerHTML = gamingTeam[0];
+                document.getElementById("two").innerHTML = gamingTeam[1];
+            }
+        }
+        var shot = '';
+        var shot1 = '';
+
+        let point1;
+        let point2;
+        let run1;
+        let four_count1 = 0;
+        let four_count2 = 0;
+        let six_count1 = 0;
+        let six_count2 = 0;
+        var randomShot;
+        var runTeam1 = 0;
+        var runTeam2 = 0;
+        var wicketCount1 = 0;
+        var wicketCount2 = 0;
+        let total_point1 = 0;
+        let total_point2 = 0;
+        let total_point3 = 0;
+        let total_point4 = 0;
+
+        function shotType() {
+            randomShot = Math.floor(Math.random() * 7) + 1;
+            switch (randomShot) {
+                case 1:
+                    shot = "Single"
+                    run1 = 1
+                    shot1 = 1
+                    point1 = 1;
+                    point2 = 0;
+                    runTeam1 += 1;
+
+                    break;
+                case 2:
+                    shot = "Double"
+                    run1 = 2
+                    shot1 = 2
+                    point1 = 2;
+                    point2 = 0;
+                    runTeam1 += 2;
+
+                    break
+                case 3:
+                    shot = "Three"
+                    run1 = 3
+                    shot1 = 3
+                    point1 = 3;
+                    point2 = 0;
+                    runTeam1 += 3;
+
+                    break;
+                case 4:
+                    shot = "Four"
+                    run1 = 4
+                    shot1 = 4
+                    point1 = 5;
+                    point2 = 0;
+                    runTeam1 += 4;
+                    four_count1 += 1;
+
+                    break
+                case 5:
+                    shot = "Six"
+                    run1 = 6
+                    shot1 = 6;
+                    point1 = 8;
+                    point2 = 0;
+                    runTeam1 += 6;
+                    six_count1 += 1;
+
+                    break;
+                case 6:
+                    shot = "Dot"
+                    run1 = 0;
+                    shot1 = '.'
+                    point2 = 1;
+                    point1 = 0;
+                    runTeam1 += 0;
+
+                    break
+                case 7:
+                    shot = "Wicket"
+                    run1 = 0;
+                    shot1 = "W";
+                    point1 = 0;
+                    point2 = 10;
+                    wicketCount1 += 1;
+                    break;
+            }
+
+
+            return shot;
+
+
+        }
+        var shot3 = '';
+        var shot2 = '';
+        let point3;
+        let point4;
+        let run2;
+
+
+        function shotType1() {
+            randomShot = Math.floor(Math.random() * 7) + 1;
+            switch (randomShot) {
+                case 1:
+                    shot3 = "Single"
+                    run2 = 1
+                    shot2 = 1
+                    point3 = 1;
+                    point4 = 0;
+                    runTeam2 += 1;
+                    break;
+                case 2:
+                    shot3 = "Double"
+                    run2 = 2
+                    shot2 = 2
+                    point3 = 2;
+                    point4 = 0;
+                    runTeam2 += 2;
+                    break;
+                case 3:
+                    shot3 = "Three"
+                    run2 = 3
+                    shot2 = 3
+                    point3 = 3;
+                    point4 = 0;
+                    runTeam2 += 3;
+                    break;
+                case 4:
+                    shot3 = "Four"
+                    run2 = 4
+                    shot2 = 4
+                    point3 = 5;
+                    point4 = 0;
+                    four_count2 += 1;
+                    runTeam2 += 4;
+                    break;
+                case 5:
+                    shot3 = "Six"
+                    run2 = 6
+                    shot2 = 6
+                    point3 = 8;
+                    point4 = 0;
+                    six_count2 += 1;
+                    runTeam2 += 6;
+                    break;
+                case 6:
+                    shot3 = "Dot"
+                    run2 = 0;
+                    shot2 = '.'
+                    point4 = 1;
+                    point3 = 0;
+                    break;
+                case 7:
+                    shot3 = "Wicket"
+                    run2 = 0;
+                    shot2 = "W"
+                    point4 = 10;
+                    point3 = 0;
+                    wicketCount2 += 1;
+                    break;
+            }
+            return shot3;
+        }
+
+        let over = 5;
+        let ball = 6;
+        let myOver = [];
+        let currentBall = 0;
+        let currentOver = 0;
+        let count = 0;
+        let bowlerWicket = 0;
+        let Wicket1 = 0;
+        let total1 = 0;
+        let total2 = 0;
+        let arrScore1 = [];
+        let arrScore2 = [];
+        let ballCount1 = 0;
+        for (let i = 0; i < over; i++) {
+            myOver[i] = new Array(ball).fill(null);
+        }
+
+        let total_run1 = 0;
+        let total_run2 = 0;
+        function hit() {
+            let playedShot = shotType();
+            document.getElementById("shots").value = playedShot;
+
+            if (bowlerWicket == 10) {
+                alert("Team All Out");
+                // document.getElementById("hitted1").disabled = true;
+                document.getElementById("end").style.display = "none";
+                document.getElementById("result1").style.display = "block";
+                return false;
+            }
+            let p1 = "";
+
+            listArr = [...listArr1, ...listArr2, ...listArr3];
+            let p = "";
+            document.getElementById("scorecardTeam1").value = `${runTeam1}/${wicketCount1} `;
+            if (currentOver < over && currentBall < ball) {
+                myOver[currentOver][currentBall] = playedShot;
+                document.getElementById("bowler").value = newArr2[count].name;
+
+                if (listArr[bowlerWicket].name == captainName1) {
+                    total1 = total1 + point1 * 2;
+                    total_run1 = total_run1 + run1;
+                    total_point1 = total_point1 + point1 * 2;
+                    ballCount1++;
+                    document.getElementById("scorecard1").value = total1;
+
+
+                } else if (listArr[bowlerWicket].name == vCaptainName1) {
+                    total1 = total1 + point1 * 1.5;
+                    total_run1 = total_run1 + run1;
+                    total_point1 = total_point1 + point1 * 1.5;
+                    ballCount1++;
+                    document.getElementById("scorecard1").value = total1;
+                } else {
+                    total1 = total1 + point1;
+                    total_run1 = total_run1 + run1;
+                    total_point1 = total_point1 + point1;
+                    ballCount1++;
+                    document.getElementById("scorecard1").value = total1;
+                }
+
+                if (newArr2[count].name == captainName2) {
+                    total2 = total2 + point2 * 2;
+                    total_point2 = total_point2 + point2 * 2;
+                    ballCount1++;
+                    document.getElementById("scorecard2").value = total2;
+                } else if (newArr2[count].name == vCaptainName2) {
+                    total2 = total2 + point2 * 1.5;
+                    total_point2 = total_point2 + point2 * 1.5;
+                    ballCount1++;
+                    document.getElementById("scorecard2").value = total2;
+                } else {
+                    total2 = total2 + point2;
+                    total_point2 = total_point2 + point2;
+                    ballCount1++;
+                    document.getElementById("scorecard2").value = total2;
+                }
+
+                if ((playedShot == "Wicket") && (listArr[bowlerWicket].name == captainName1) && (total_run1 == 0)) {
+                    total_point1 = total_point1 - 4;
+                    total1 = total1 - 4;
+                    document.getElementById("scorecard1").value = total1;
+                } else if ((playedShot == "Wicket") && (listArr[bowlerWicket].name == vCaptainName1) && (total_run1 == 0)) {
+                    total_point1 = total_point1 - 3;
+                    total1 = total1 - 3;
+                    document.getElementById("scorecard1").value = total1;
+                } else if ((playedShot == "Wicket") && (total_run1 == 0)) {
+                    total_point1 = total_point1 - 2;
+                    total1 = total1 - 2;
+                    document.getElementById("scorecard1").value = total1;
+                }
+                let obj2 = {
+                    name: listArr[bowlerWicket].name,
+                    run: total_run1,
+                    ball: ballCount1,
+                    four: four_count1,
+                    six: six_count1,
+                    point: total_point1
+
+                }
+                let index = arrScore1.findIndex(obj => obj.name === obj2.name);
+                if (index !== -1) {
+                    arrScore1[index] = obj2;
+                } else {
+                    arrScore1.push(obj2);
+                }
+
+
+
+                if (playedShot != "Wicket") {
+                    p += `<span class="score">${shot1} </span>`;
+
+                    p1 += ` <p class="card-text text-center">Over-[${currentOver}.${currentBall + 1
+                        }] :  ${myOver[currentOver][currentBall]
+                        } , ${new Date().toLocaleString()}  </p>`;
+                    document.getElementById("batter").value = listArr[bowlerWicket].name;
+                    console.log(arrScore1);
+
+                } else {
+
+                    bowlerWicket++;
+                    Wicket1++;
+
+
+
+                    total_run1 = 0;
+                    four_count1 = 0;
+                    six_count1 = 0;
+                    total_point1 = 0;
+                    ballCount1 = 0;
+                    let obj3 = {
+                        name: newArr2[count].name,
+                        point: total_point2,
+                        wicket: Wicket1
+                    }
+                    let index1 = arrScore2.findIndex(obj => obj.name === obj3.name);
+                    if (index1 !== -1) {
+                        arrScore2[index1] = obj3;
+                    } else {
+                        arrScore2.push(obj3);
+                    }
+                    p += `<span class="score">${shot1} </span>`;
+                    p1 += ` <p class="card-text text-danger text-center">Over-[${currentOver}.${currentBall + 1}] :  ${myOver[currentOver][currentBall]} , ${new Date().toLocaleString()} `;
+                    document.getElementById("batter").value = listArr[bowlerWicket].name;
+                }
+                currentBall++;
+                if (currentBall === ball) {
+
+                    currentBall = 0;
+                    total_point2 = 0;
+                    Wicket1 = 0;
+                    currentOver++;
+                    count++;
+                }
+                // console.log(arrScore1);
+                // console.log(arrScore2);
+                document.getElementById("over").innerHTML += p;
+                document.getElementById("team_over1").innerHTML += p1;
+                disableButton();
+            } else {
+                document.getElementById("hitted").disabled = true;
+                alert("1st inning is finished");
+                alert("2nd team let's play");
+                document.getElementById("playSecondTeam").style.display = "block";
+                return false;
+            }
+        }
+
+        let over1 = 5;
+        let ball1 = 6;
+        let myOver1 = [];
+        let currentBall1 = 0;
+        let currentOver1 = 0;
+        let count1 = 0;
+        let bowlerWicket1 = 0;
+        let Wicket2 = 0;
+        let arrScore3 = [];
+        let arrScore4 = [];
+        let ballCount2 = 0;
+
+        for (let i = 0; i < over1; i++) {
+            myOver1[i] = new Array(ball1).fill(null);
+        }
+
+        function hit1() {
+            let playedShot = shotType1();
+            document.getElementById("shots1").value = playedShot;
+
+
+            if (bowlerWicket1 == 10) {
+                alert("Team All Out");
+                // document.getElementById("hitted1").disabled = true;
+                document.getElementById("end").style.display = "none";
+                document.getElementById("result1").style.display = "block";
+                document.getElementById("inning1").style.display = "block";
+                document.getElementById("result1").style.display = "block";
+                document.getElementById("inning2").style.display = "block";
+                return false;
+            }
+
+            newArr = [...newArr1, ...newArr2, ...newArr3];
+            let p = "";
+            let p3 = "";
+            document.getElementById("scorecardTeam2").value = `${runTeam2}/${wicketCount2} `;
+            if (currentOver1 < over1 && currentBall1 < ball1) {
+                myOver1[currentOver1][currentBall1] = playedShot;
+                document.getElementById("bowler1").value = listArr2[count1].name;
+
+                if (newArr[bowlerWicket1].name == captainName2) {
+                    total2 = total2 + point3 * 2;
+                    total_run2 = total_run2 + run2;
+                    total_point3 = total_point3 + point3 * 2;
+                    ballCount2++;
+                    document.getElementById("tscorecard2").value = total2;
+
+                } else if (newArr[bowlerWicket1].name == vCaptainName2) {
+                    total2 = total2 + point3 * 1.5;
+                    total_run2 = total_run2 + run2;
+                    total_point3 = total_point3 + point3 * 1.5;
+
+                    ballCount2++;
+
+                    document.getElementById("tscorecard2").value = total2;
+
+                } else {
+                    total2 = total2 + point3;
+                    total_run2 = total_run2 + run2;
+                    total_point3 = total_point3 + point3;
+                    ballCount2++;
+
+                    document.getElementById("tscorecard2").value = total2;
+                }
+
+                if (listArr2[count1].name == captainName1) {
+                    total1 = total1 + point4 * 2;
+                    total_point4 = total_point4 + point4 * 4;
+                    ballCount2++;
+                    document.getElementById("tscorecard1").value = total1;
+
+                } else if (listArr2[count1].name == vCaptainName1) {
+
+                    total1 = total1 + point4 * 1.5;
+                    total_point4 = total_point4 + point4 * 1.5;
+                    ballCount2++;
+                    document.getElementById("tscorecard1").value = total1;
+
+                } else {
+                    total1 = total1 + point4;
+                    total_point4 = total_point4 + point4;
+                    ballCount2++;
+                    document.getElementById("tscorecard1").value = total1;
+
+                }
+                if ((playedShot == "Wicket") && (newArr[bowlerWicket1].name == captainName2) && (total_run2 == 0)) {
+                    total_point3 = total_point3 - 4;
+                    total2 = total2 - 4;
+                    document.getElementById("tscorecard2").value = total2;
+                } else if ((playedShot == "Wicket") && (newArr[bowlerWicket1].name == vCaptainName2) && (total_run2 == 0)) {
+                    total_point3 = total_point3 - 3;
+                    total2 = total2 - 3;
+                    document.getElementById("tscorecard2").value = total2;
+                } else if ((playedShot == "Wicket") && (total_run2 == 0)) {
+                    total_point3 = total_point3 - 2;
+                    total2 = total2 - 2;
+                    document.getElementById("tscorecard2").value = total2;
+                }
+                let obj4 = {
+                    name: newArr[bowlerWicket1].name,
+                    run: total_run2,
+                    ball: ballCount2,
+                    four: four_count2,
+                    six: six_count2,
+                    point: total_point3
+
+                }
+                let index = arrScore3.findIndex(obj => obj.name === obj4.name);
+                if (index !== -1) {
+                    arrScore3[index] = obj4;
+                } else {
+                    arrScore3.push(obj4);
+                }
+
+
+                console.log(arrScore4);
+
+                if (playedShot != "Wicket") {
+                    p += `<span class="score">${shot2} </span>`;
+
+                    p3 += ` <p class="card-text text-center">Over-[${currentOver1}.${currentBall1 + 1
+                        }] :  ${myOver1[currentOver1][currentBall1]
+                        } , ${new Date().toLocaleString()}  </p>`;
+                    document.getElementById("batter1").value = newArr[bowlerWicket1].name;
+                } else {
+
+                    bowlerWicket1++;
+                    Wicket2++;
+                    total_run2 = 0;
+                    four_count2 = 0;
+                    six_count2 = 0;
+                    total_point3 = 0;
+                    ballCount2 = 0;
+
+                    let obj5 = {
+                        name: listArr2[count1].name,
+                        point: total_point4,
+                        wicket: Wicket2
+                    }
+                    let index1 = arrScore4.findIndex(obj => obj.name === obj5.name);
+                    if (index1 !== -1) {
+                        arrScore4[index1] = obj5;
+                    } else {
+                        arrScore4.push(obj5);
+                    }
+
+                    p += `<span class="score">${shot2} </span>`;
+                    p3 += ` <p class="card-text text-danger text-center">Over-[${currentOver1}.${currentBall1 + 1}] :  ${myOver1[currentOver1][currentBall1]} , ${new Date().toLocaleString()} `;
+                    document.getElementById("batter1").value = newArr[bowlerWicket1].name;
+                }
+                currentBall1++;
+                if (currentBall1 === ball1) {
+
+                    currentBall1 = 0;
+                    total_point4 = 0;
+                    currentOver1++;
+                    Wicket2 = 0;
+                    count1++;
+                }
+
+                document.getElementById("over1").innerHTML += p;
+                document.getElementById("team_over2").innerHTML += p3;
+                disableButton1();
+                // console.log(arrScore3);
+                // console.log(arrScore4);
+            } else {
+                alert("2nd inning is finished");
+                document.getElementById("hitted1").disabled = true;
+                document.getElementById("end").style.display = "none";
+                document.getElementById("result1").style.display = "block";
+                document.getElementById("inning1").style.display = "block";
+                document.getElementById("inning2").style.display = "block";
+                return false;
+            }
+        }
+        function result() {
+            document.getElementById("hello").style.display = "block";
+            if (total1 > total2) {
+                let win = `Congratulations!!!!! ${gamingTeam[0]} Win`
+                document.getElementById("middle").innerHTML = win;
+            } else if (total1 < total2) {
+                let win = `Conngratulations ${gamingTeam[1]} Win`
+                document.getElementById("middle").innerHTML = win;
+            } else {
+                let win = `Not win any team scores are same of both teams`
+                document.getElementById("middle").innerHTML = win;
+            }
+        }
+        function disableButton() {
+            const button = document.getElementById("hitted");
+            button.disabled = true;
+            button.innerText = "Wait for 1 seconds...";
+            setTimeout(() => {
+                button.disabled = false;
+                button.innerText = "Bowl";
+            }, 3000);
+        }
+
+        function disableButton1() {
+            const button = document.getElementById("hitted1");
+            button.disabled = true;
+            button.innerText = "Wait for 1 seconds...";
+            setTimeout(() => {
+                button.disabled = false;
+                button.innerText = "Bowl";
+            }, 1000);
+        }
+
+
+
+        function Team1Scored() {
+            document.getElementById("inning1").style.display = "none"
+            document.getElementById("hideInning1").style.display = "block"
+            document.getElementById("hideTable1").style.display = "block"
+            if (arrScore1.length == 0 || arrScore2.length == 0) {
+                alert("please play first game then show the score");
+            } else {
+                let table = `<table class="table w-40 border mt-5">
+                     <thead>
+                  <tr>
+                    <th scope="col">Batter</th>
+                    <th scope="col">R</th>
+                    <th scope="col">B</th>
+                    <th scope="col">4s</th>
+                    <th scope="col">6s</th>
+                    <th scope="col">Point</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">`
+                let tr = "";
+                for (let i of arrScore1) {
+                    tr = tr + "<tr>";
+                    tr = tr + `<td>${i.name}</td>`;
+                    tr += `<td>${i.run}</td>`;
+                    tr += `<td>${i.ball}</td>`;
+                    tr += `<td>${i.four}</td>`;
+                    tr += `<td>${i.six}</td>`;
+                    tr += `<td>${i.point}</td>`;
+                    tr = tr + "</tr>";
+                };
+                table = table + tr + "</tbody></table>";
+                document.getElementById("table1").innerHTML = table;
+
+                let table2 = ` <table class="table w-40 border mt-5">
+                    <thead>
+                  <tr>
+                    <th scope="col">Bowler</th>
+                    <th scope="col">w</th>
+                    <th scope="col">Point</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">`
+                let tr1 = "";
+                for (let i of arrScore2) {
+                    tr1 = tr1 + "<tr>";
+                    tr1 = tr1 + `<td>${i.name}</td>`;
+                    tr1 += `<td>${i.wicket}</td>`;
+                    tr1 += `<td>${i.point}</td>`;
+                    tr1 = tr1 + "</tr>";
+                };
+                table2 = table2 + tr1 + "</tbody></table>";
+                document.getElementById("table2").innerHTML = table2;
+
+            }
+
+
+        }
+
+        function Team2Scored() {
+            document.getElementById("inning2").style.display = "none"
+            document.getElementById("hideInning2").style.display = "block"
+            document.getElementById("hideTable2").style.display = "block"
+
+            if (arrScore3.length == 0 || arrScore4.length == 0) {
+                alert("please play first game then show the score");
+            } else {
+
+                let table = ` <thead>
+                  <tr>
+                    <th scope="col">Batter</th>
+                    <th scope="col">R</th>
+                    <th scope="col">B</th>
+                    <th scope="col">4s</th>
+                    <th scope="col">6s</th>
+                    <th scope="col">Point</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">`
+                let tr = "";
+                for (let i of arrScore3) {
+                    tr = tr + "<tr>";
+                    tr = tr + `<td>${i.name}</td>`;
+                    tr += `<td>${i.run}</td>`;
+                    tr += `<td>${i.ball}</td>`;
+                    tr += `<td>${i.four}</td>`;
+                    tr += `<td>${i.six}</td>`;
+                    tr += `<td>${i.point}</td>`;
+                    tr = tr + "</tr>";
+                };
+                table = table + tr + "</tbody>";
+                document.getElementById("table3").innerHTML = table;
+
+                let table2 = ` <thead>
+                  <tr>
+                    <th scope="col">Bowler</th>
+                    <th scope="col">w</th>
+                    <th scope="col">Point</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">`
+                let tr1 = "";
+                for (let i of arrScore4) {
+                    tr1 = tr1 + "<tr>";
+                    tr1 = tr1 + `<td>${i.name}</td>`;
+                    tr1 += `<td>${i.wicket}</td>`;
+                    tr1 += `<td>${i.point}</td>`;
+                    tr1 = tr1 + "</tr>";
+                };
+                table2 = table2 + tr1 + "</tbody>";
+                document.getElementById("table4").innerHTML = table2;
+            }
+
+
+        }
+        var hideSummary1 = () => {
+            document.getElementById("inning1").style.display = "block"
+            document.getElementById("hideInning1").style.display = "none";
+            document.getElementById("hideTable1").style.display = "none"
+        }
+        var hideSummary2 = () => {
+            document.getElementById("inning2").style.display = "block"
+            document.getElementById("hideInning2").style.display = "none";
+            document.getElementById("hideTable2").style.display = "none"
+        }
+        function main() {
+            location.reload();
+        }
+        function optional() {
+            window.close();
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="moto">
+        <div class="d-flex justify-content-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Dream11_logo.svg" alt=""
+                style="height: 200px; width: 300px;">
+
+        </div>
+        <div class="mt-3 justify-content-center" style="display: flex">
+
+            <div>
+                <button type="button" class="btn btn-success" id="tosswin" style="border: 2px solid black;"
+                    onclick="tossWin()">Toss</button>
+            </div>
+            <div id="toss"
+                style="height: 36px;padding-left:15px;padding-top: 5px; width: 320px; margin-left: 10px; border: 2px solid black; border-radius: 5px;"
+                class="bg-secondary text-white">
+
+            </div>
+        </div>
+
+
+
+
+        <div class="mt-5" id="team1" style="display: none;">
+            <div class="d-flex justify-content-center">
+                <div id="teamName1"
+                    style="font-size:  2.0em; background-color: #56ae33; width: 400px;border-radius: 20px;padding-top: 30px;"
+                    class="text-center text-black d-flex justify-content-center"></div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button type="button" class="btn btn-primary mx-3" style="border: 2px solid black;" onclick="bat()">
+                    Batsmen <span class="badge bg-secondary" id="batTotal"></span>
+                </button>
+                <button type="button" class="btn btn-primary mx-3" style="border: 2px solid black;" onclick="bowl()">
+                    Bowler <span class="badge bg-secondary" id="bowlTotal"></span>
+                </button>
+                <button type="button" class="btn btn-primary mx-3" style="border: 2px solid black;"
+                    onclick="Wicketkeeper()">
+                    Wicketkeeper <span class="badge bg-secondary" id="keepingTotal"></span>
+                </button>
+                <button type="button" class="btn btn-primary mx-3" style="border: 2px solid black;" onclick="summary()">
+                    summary <span class="badge bg-secondary" id="credittotal"></span>
+                </button>
+                <button class="btn btn-primary mx-3" id="secondteam" style="border: 2px solid black;"
+                    onclick="secondTeam()">Create
+                    Second Team </button>
+            </div>
+
+
+            <div id="list" class="d-flex flex-row row justify-content-center" style="display: block;">
+                <div class="col-lg-3" id="list" style="display: block;">
+
+                </div>
+
+            </div>
+
+            <div class="d-flex  justify-content-center">
+                <div id="chooseC" class="my-4  mx-4 text-white" style="display: none;">Choose Captain:-<div
+                        class="col-auto">
+                        <label class="visually-hidden" for="captain1">Preference</label>
+                        <select class="form-select" id="captain1" onchange="chooseCaptain1(this.value)">
+                        </select>
+                    </div>
+                </div>
+                <div id="chooseVC" class="my-4  mx-4 text-white" style="display: none;">Choose Vice Captain:-<div
+                        class="col-auto">
+                        <label class="visually-hidden" for="captain1">Preference</label>
+                        <select class="form-select" id="vCaptain1" onchange="chooseVCaptain1(this.value)">
+                            <option selected>VCaptain</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="mt-5" id="team2" style="display: none;">
+            <div class="d-flex justify-content-center">
+                <div id="teamName2"
+                    style="font-size:  2.0em; background-color: #56ae33; width: 400px;border-radius: 20px;padding-top: 30px;"
+                    class="text-center text-black d-flex justify-content-center"></div>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                <button type="button" class="btn btn-primary mx-3" style="border: 2px solid black;" onclick="bat1()">
+                    Batsmen <span class="badge bg-secondary" id="batTotal1"></span>
+                </button>
+                <button type="button" class="btn btn-primary mx-3" style="border: 2px solid black;" onclick="bowl1()">
+                    Bowler <span class="badge bg-secondary" id="bowlTotal1"></span>
+                </button>
+                <button type="button" class="btn btn-primary mx-3" style="border: 2px solid black;"
+                    onclick="Wicketkeeper1()">
+                    Wicketkeeper <span class="badge bg-secondary" id="keepingTotal1"></span>
+                </button>
+                <button type="button" class="btn btn-primary mx-3" style="border: 2px solid black;"
+                    onclick="summary1()">
+                    summary <span class="badge bg-secondary" id="credittotal1"></span>
+                </button>
+
+            </div>
+
+            <div id="list1" class="d-flex flex-row row justify-content-center" style="display: block;">
+                <div class="col-lg-3" id="list1" style="display: block;">
+
+                </div>
+
+            </div>
+
+            <div class="d-flex  justify-content-center">
+                <div id="chooseC2" class="my-4  mx-4 text-white" style="display: none;">Choose Captain:-<div
+                        class="col-auto">
+                        <label class="visually-hidden" for="captain2">Preference</label>
+                        <select class="form-select" id="captain2" onchange="chooseCaptain2(this.value)">
+
+                        </select>
+                    </div>
+                </div>
+                <div id="chooseVC2" class="my-4  mx-4 text-white" style="display: none;">Choose Vice Captain:-<div
+                        class="col-auto">
+                        <label class="visually-hidden" for="captain2">Preference</label>
+                        <select class="form-select" id="vCaptain2" onchange="chooseVCaptain2(this.value)">
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-grid gap-2 col-6 mx-auto my-4">
+                <button class="btn btn-primary" id="teamPre" style="display: none; border: 2px solid black;"
+                    onclick="teamPreview()" type="button">Team Preview</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="teamSummary" style="display: none;">
+        <h2 class="text-center text-white">Team Summary</h2>
+        <div id="teams" class="d-flex flex-row justify-content-evenly">
+            <div>
+                <h3 id="gamingTeam1" class="text-white"></h3>
+                <p>
+                <ol class="list-group list-group-numbered" id="playingTeam1">
+
+                </ol>
+                </p>
+            </div>
+            <div>
+                <h3 class="text-white" id="gamingTeam2"></h3>
+                <p>
+                <ol class="list-group list-group-numbered" id="playingTeam2">
+
+                </ol>
+                </p>
+            </div>
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto my-4">
+            <button class="btn btn-primary" style="border: 2px solid black;" onclick="play()" type="button">Let's
+                Play</button>
+        </div>
+    </div>
+
+
+
+    <div id="displayTeam" style="display: none;">
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary  mx-4 mt-3" style="border: 2px solid black;" id="displayTeams1"
+                onclick="Team1()">Team 1</button>
+            <button class="btn btn-primary  mx-4 mt-3" style="border: 2px solid black;" id="hideTeams1"
+                onclick="hideTeam1()">Hide Team 1</button>
+            <button class="btn btn-primary  mx-4 mt-3" style="border: 2px solid black;" id="displayTeams2"
+                onclick="Team2()">Team 2</button>
+            <button class="btn btn-primary  mx-4 mt-3" style="border: 2px solid black;" id="hideTeams2"
+                onclick="hideTeam2()">Hide Team 2</button>
+        </div>
+
+        <div class="d-flex flex-row row justify-content-center">
+            <div class="col-lg-3" id="teamList" style="display: none;">
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="start" style="display: none;">
+        <div class="d-flex flex-row justify-content-evenly my-4">
+            <div class="input-group mb-3  w-25">
+                <span class="input-group-text ">Batsman</span>
+                <input type="text" class="form-control" id="batter" readonly="true" aria-label="Sizing example input"
+                    aria-describedby="button-addon1">
+            </div>
+            <div class="input-group mb-3  w-25">
+                <span class="input-group-text">Bowler</span>
+                <input type="text" class="form-control" id="bowler" readonly="true" aria-label="Sizing example input"
+                    aria-describedby="button-addon1">
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-center my-4">
+            <div class="input-group mb-3  w-25">
+                <span class="input-group-text " id="player11"></span>
+                <input type="text" class="form-control" id="scorecard1" readonly="true"
+                    aria-label="Sizing example input" aria-describedby="button-addon1">
+            </div>
+
+            <div class="input-group mb-3  w-25 ms-3">
+                <span class="input-group-text " id="player22"></span>
+                <input type="text" class="form-control" id="scorecard2" readonly="true"
+                    aria-label="Sizing example input" aria-describedby="button-addon1">
+            </div>
+
+
+        </div>
+
+        <div class="d-flex flex-row justify-content-center my-4">
+            <div class="input-group mb-3  w-25 px-3">
+                <span class="input-group-text ">Scorecard</span>
+                <input type="text" class="form-control" id="scorecardTeam1" readonly="true"
+                    aria-label="Sizing example input" aria-describedby="button-addon1">
+            </div>
+        </div>
+
+
+        <div class="d-flex flex-row justify-content-center my-4">
+            <div class="input-group mb-3 w-25 px-3 ">
+                <button class="btn btn-primary" type="button" id="hitted" onclick="hit()">Bowl</button>
+                <input type="text" class="form-control" placeholder="" readonly="true" id="shots"
+                    aria-label="Example text with button addon" aria-describedby="button-addon1">
+            </div>
+
+        </div>
+
+
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary my-4" onclick="play1()" id="playSecondTeam"
+                style="display: none;border: 2px solid black;" type="button">Click To Play 2nd Team</button>
+        </div>
+
+        <div class="container3">
+            <div class="over" id="over">
+
+            </div>
+        </div>
+
+        <div class="container3" id="team_over1">
+
+        </div>
+
+
+
+
+    </div>
+    <div id="end" style="display: none;">
+        <div class="d-flex flex-row justify-content-evenly my-4">
+            <div class="input-group mb-3  w-25">
+                <span class="input-group-text ">Batsman</span>
+                <input type="text" class="form-control" id="batter1" readonly="true" aria-label="Sizing example input"
+                    aria-describedby="button-addon1">
+            </div>
+            <div class="input-group mb-3  w-25">
+                <span class="input-group-text">Bowler</span>
+                <input type="text" class="form-control" id="bowler1" readonly="true" aria-label="Sizing example input"
+                    aria-describedby="button-addon1">
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-center my-4">
+            <div class="input-group mb-3  w-25">
+                <span class="input-group-text " id="one"></span>
+                <input type="text" class="form-control" id="tscorecard1" readonly="true"
+                    aria-label="Sizing example input" aria-describedby="button-addon1">
+            </div>
+
+            <div class="input-group mb-3  w-25 ms-3">
+                <span class="input-group-text " id="two"></span>
+                <input type="text" class="form-control" id="tscorecard2" readonly="true"
+                    aria-label="Sizing example input" aria-describedby="button-addon1">
+            </div>
+
+
+        </div>
+
+        <div class="d-flex flex-row justify-content-center my-4">
+            <div class="input-group mb-3  w-25 px-3">
+                <span class="input-group-text ">Scorecard</span>
+                <input type="text" class="form-control" id="scorecardTeam2" readonly="true"
+                    aria-label="Sizing example input" aria-describedby="button-addon1">
+            </div>
+        </div>
+
+
+        <div class="d-flex flex-row justify-content-center my-4">
+            <div class="input-group mb-3 w-25 px-3 ">
+                <button class="btn btn-primary" type="button" id="hitted1" onclick="hit1()">Bowl</button>
+                <input type="text" class="form-control" placeholder="" readonly="true" id="shots1"
+                    aria-label="Example text with button addon" aria-describedby="button-addon1">
+            </div>
+
+        </div>
+
+        <div class="container3">
+            <div class="over" id="over1">
+
+            </div>
+        </div>
+
+        <div class="container3" id="team_over2">
+
+        </div>
+
+
+
+    </div>
+
+
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary my-2" onclick="Team1Scored()" id="inning1"
+            style="display: none; border: 2px solid black;" type="button">Show 1st Inning </button>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary my-2" onclick="hideSummary1()" id="hideInning1"
+            style="display: none;border: 2px solid black;" type="button">Hide 1st Inning </button>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary my-2" onclick="Team2Scored()" id="inning2"
+            style="display: none;border: 2px solid black;" type="button">Show 2nd Inning </button>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary my-2" onclick="hideSummary2()" id="hideInning2"
+            style="display: none;border: 2px solid black;" type="button">Hide 2nd Inning</button>
+    </div>
+
+    <div class="container">
+        <div class="row" id="hideTable1">
+            <div>
+                <table class="table mt-2" id="table1">
+
+                </table>
+            </div>
+
+            <div>
+                <table class="table mt-2 " id="table2">
+
+                </table>
+            </div>
+
+        </div>
+
+
+        <div class="row" id="hideTable2">
+            <div>
+                <table class="table" id="table3">
+
+                </table>
+            </div>
+
+            <div>
+                <table class="table" id="table4">
+
+                </table>
+            </div>
+
+        </div>
+
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="button" class="btn btn-success" style="border: 2px solid black; display: none;" id="result1"
+                onclick="result()">Result</button>
+        </div>
+        <div class="container1 mt-2" style="display: none;" id="hello">
+            <div class="game-over">
+                <h1 class="main">Game Over</h1>
+                <h3 class="middle" id="middle"></h3>
+                <button type="button" class="btn btn-success" style="border: 2px solid black;" onclick="main()">New
+                    Game</button>
+                <button type="button" class="btn btn-danger" style="border: 2px solid black;"
+                    onclick="optional()">Exit</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
